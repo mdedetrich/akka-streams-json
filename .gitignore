@@ -1,0 +1,41 @@
+# Created by .ignore support plugin (hsz.mobi)
+### Scala template
+*.class
+*.log
+### SBT template
+# Simple Build Tool
+# http://www.scala-sbt.org/release/docs/Getting-Started/Directories.html#configuring-version-control
+
+dist/*
+target/
+lib_managed/
+src_managed/
+project/boot/
+project/plugins/project/
+.history
+.cache
+.lib/
+
+http-json/dist/*
+http-json/lib_managed/
+http-json/src_managed/
+http-json/project/boot/
+http-json/project/plugins/project/
+
+stream-json/dist/*
+stream-json/lib_managed/
+stream-json/src_managed/
+stream-json/project/boot/
+stream-json/project/plugins/project/
+
+support/http-circe/dist/*
+support/http-circe/lib_managed/
+support/http-circe/src_managed/
+support/http-circe/project/boot/
+support/http-circe/project/plugins/project/
+
+support/stream-circe/dist/*
+support/stream-circe/lib_managed/
+support/stream-circe/src_managed/
+support/stream-circe/project/boot/
+support/stream-circe/project/plugins/project/
