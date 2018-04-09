@@ -1,3 +1,9 @@
+[![Build Status][ci-img]][ci]
+[![Coverage][coverage-img]][coverage]
+[![Maven][maven-img]][maven]
+[![Join at Gitter][gitter-img]][gitter]
+[![Apache License][license-img]][license]
+
 # Akka Streams Json Support
 
 This library provides Json support for stream based applications using [jawn](https://github.com/non/jawn)
@@ -99,3 +105,15 @@ using directly the underlying ByteBuffers without conversion.
 ## License
 
 This code is open source software licensed under the Apache 2.0 License.
+
+[ci-img]: https://img.shields.io/travis/mdedetrich/akka-streams-json/master.svg
+[coverage-img]: https://img.shields.io/codecov/c/github/mdedetrich/akka-streams-json/master.svg
+[maven-img]: https://img.shields.io/maven-central/v/org.mdedetrich/akka-stream-json_2.12.svg?label=latest
+[gitter-img]: https://img.shields.io/badge/gitter-Join_Chat-1dce73.svg
+[license-img]: https://img.shields.io/badge/license-APACHE_2-green.svg
+
+[ci]: https://travis-ci.org/mdedetrich/akka-streams-json
+[coverage]: https://codecov.io/github/mdedetrich/akka-streams-json
+[maven]: http://search.maven.org/#search|ga|1|g%3A%22org.mdedetrich%22%20AND%20%28a%3Aakka-stream-*_2.11%20OR%20a%3Aakka-http-*_2.11%20OR%20a%3Aakka-stream-*_2.12%20OR%20a%3Aakka-http-*_2.12%29
+[gitter]: https://gitter.im/mdedetrich/akka-streams-json?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge
+[license]: https://www.apache.org/licenses/LICENSE-2.0
