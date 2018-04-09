@@ -1,11 +1,10 @@
 language: scala
-sudo: false
 
 jdk:
   - oraclejdk8
 
 scala:
-  - 2.11.8
+  - 2.11.11
   - 2.12.4
 
 cache:
@@ -16,12 +15,13 @@ cache:
     - $HOME/.sbt/launchers/
 
 script:
-  - sbt ++$TRAVIS_SCALA_VERSION travis
+  - sbt ++$TRAVIS_SCALA_VERSION clean coverage test coverageReport
   - find $HOME/.sbt -name "*.lock" | xargs rm
   - find $HOME/.ivy2 -name "ivydata-*.properties" | xargs rm
 
-before_install:
-  - pip install --user codecov
+before_cache:
+  - find $HOME/.sbt -name "*.lock" -type f -delete
+  - find $HOME/.ivy2/cache -name "ivydata-*.properties" -type f -delete
 
 after_success:
-  - codecov
+  - bash <(curl -s https://codecov.io/bash)
