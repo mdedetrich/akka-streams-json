@@ -36,7 +36,7 @@ There are two main modules, `akka-stream-json` and `akka-http-json`.
 
 ```
 libraryDependencies ++= List(
-  "org.mdedetrich" %% "akka-streams-json" % "0.1.0",
+  "org.mdedetrich" %% "akka-stream-json" % "0.1.0",
   "org.mdedetrich" %% "akka-http-json" % "0.1.0"
 )
 ```
@@ -70,7 +70,7 @@ over rendering, you'll only get an Unmarshaller.
 
 ```
 libraryDependencies ++= List(
-  "org.mdedetrich" %% "akka-streams-circe" % "0.1.0",
+  "org.mdedetrich" %% "akka-stream-circe" % "0.1.0",
   "org.mdedetrich" %% "akka-http-circe" % "0.1.0"
 )
 ```
