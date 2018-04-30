@@ -10,8 +10,6 @@ import io.circe._
 import _root_.jawn.AsyncParser
 import org.mdedetrich.akka.json.stream.JsonStreamParser
 
-object CirceStreamSupport extends CirceStreamSupport
-
 trait CirceStreamSupport {
 
   def decode[A: Decoder]: Flow[ByteString, A, NotUsed] =
@@ -48,3 +46,5 @@ trait CirceStreamSupport {
     case _                  => false
   }
 }
+
+object CirceStreamSupport extends CirceStreamSupport

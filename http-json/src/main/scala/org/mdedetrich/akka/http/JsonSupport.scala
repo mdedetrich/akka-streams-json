@@ -7,8 +7,6 @@ import akka.http.scaladsl.util.FastFuture
 import jawn.Facade
 import org.mdedetrich.akka.json.stream.JsonStreamParser
 
-object JsonSupport extends JsonSupport
-
 trait JsonSupport {
 
   implicit def jsonUnmarshaller[J: Facade]: FromEntityUnmarshaller[J] =
@@ -21,3 +19,5 @@ trait JsonSupport {
       })
       .forContentTypes(`application/json`)
 }
+
+object JsonSupport extends JsonSupport

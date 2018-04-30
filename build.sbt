@@ -1,10 +1,10 @@
 name := "akka-streams-json"
 
-val currentScalaVersion = "2.12.4"
+val currentScalaVersion = "2.12.6"
 val scala211Version     = "2.11.11"
 val circeVersion        = "0.9.3"
-val akkaVersion         = "2.5.11"
-val akkaHttpVersion     = "10.0.11"
+val akkaVersion         = "2.5.12"
+val akkaHttpVersion     = "10.1.1"
 val jawnVersion         = "0.11.1"
 val scalaTestVersion    = "3.0.5"
 
@@ -15,25 +15,25 @@ organization in ThisBuild := "org.mdedetrich"
 lazy val streamJson = project.in(file("stream-json")) settings (
   name := "akka-stream-json",
   libraryDependencies ++= Seq(
-    "com.typesafe.akka" %% "akka-stream" % akkaVersion % "provided",
+    "com.typesafe.akka" %% "akka-stream" % akkaVersion,
     "org.spire-math"    %% "jawn-parser" % jawnVersion
   )
 )
 
 lazy val httpJson = project.in(file("http-json")) settings (
   name := "akka-http-json",
-  libraryDependencies ++= Seq("com.typesafe.akka" %% "akka-http" % akkaHttpVersion % "provided")
+  libraryDependencies ++= Seq("com.typesafe.akka" %% "akka-http" % akkaHttpVersion % Provided)
 ) dependsOn streamJson
 
 lazy val streamCirce = project.in(file("support") / "stream-circe") settings (
   name := "akka-stream-circe",
-  libraryDependencies ++= Seq("com.typesafe.akka" %% "akka-stream" % akkaVersion % "provided",
+  libraryDependencies ++= Seq("com.typesafe.akka" %% "akka-stream" % akkaVersion % Provided,
                               "io.circe"          %% "circe-jawn"  % circeVersion)
 ) dependsOn streamJson
 
 lazy val httpCirce = project.in(file("support") / "http-circe") settings (
   name := "akka-http-circe",
-  libraryDependencies ++= Seq("com.typesafe.akka" %% "akka-http" % akkaHttpVersion % "provided")
+  libraryDependencies ++= Seq("com.typesafe.akka" %% "akka-http" % akkaHttpVersion % Provided)
 ) dependsOn (streamCirce, httpJson)
 
 lazy val parent = project in file(".") dependsOn (httpJson, httpCirce) aggregate (streamJson, httpJson, streamCirce, httpCirce, tests) settings (
@@ -73,15 +73,6 @@ configs(IntegrationTest)
 val enumeratumVersion      = "1.5.12"
 val enumeratumCirceVersion = "1.5.14"
 val akkaStreamJson         = "3.4.0"
-
-libraryDependencies ++= Seq(
-  "com.typesafe.akka" %% "akka-http"      % "10.0.11",
-  "io.circe"          %% "circe-core"     % circeVersion,
-  "io.circe"          %% "circe-generic"  % circeVersion,
-  "io.circe"          %% "circe-parser"   % circeVersion,
-  "org.scalatest"     %% "scalatest"      % "3.0.3" % "test, it",
-  "ch.qos.logback"    % "logback-classic" % "1.2.3" % "test, it"
-)
 
 homepage in ThisBuild := Some(url("https://github.com/mdedetrich/akka-streams-json"))
 

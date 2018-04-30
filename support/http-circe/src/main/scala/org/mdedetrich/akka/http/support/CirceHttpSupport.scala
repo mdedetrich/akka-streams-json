@@ -23,3 +23,5 @@ trait CirceHttpSupport extends JsonSupport {
   implicit def circeMarshaller[A](implicit A: Encoder[A], P: Printer = Printer.noSpaces): ToEntityMarshaller[A] =
     circeJsonMarshaller.compose(A.apply)
 }
+
+object CirceHttpSupport extends CirceHttpSupport
