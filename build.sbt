@@ -3,9 +3,9 @@ name := "akka-streams-json"
 val currentScalaVersion = "2.12.6"
 val scala211Version     = "2.11.11"
 val circeVersion        = "0.9.3"
-val akkaVersion         = "2.5.12"
-val akkaHttpVersion     = "10.1.1"
-val jawnVersion         = "0.11.1"
+val akkaVersion         = "2.5.14"
+val akkaHttpVersion     = "10.1.3"
+val jawnVersion         = "0.11.1"      // Note: updating to 0.12.1 breaks 'sbt test'
 val scalaTestVersion    = "3.0.5"
 
 scalaVersion in ThisBuild := currentScalaVersion
@@ -69,10 +69,6 @@ scalacOptions in ThisBuild ++= Seq(
 Defaults.itSettings
 
 configs(IntegrationTest)
-
-val enumeratumVersion      = "1.5.12"
-val enumeratumCirceVersion = "1.5.14"
-val akkaStreamJson         = "3.4.0"
 
 homepage in ThisBuild := Some(url("https://github.com/mdedetrich/akka-streams-json"))
 
