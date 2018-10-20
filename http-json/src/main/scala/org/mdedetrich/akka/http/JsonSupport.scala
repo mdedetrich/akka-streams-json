@@ -4,12 +4,12 @@ import akka.http.scaladsl.model.HttpEntity
 import akka.http.scaladsl.model.MediaTypes.`application/json`
 import akka.http.scaladsl.unmarshalling.{FromEntityUnmarshaller, Unmarshaller}
 import akka.http.scaladsl.util.FastFuture
-import jawn.Facade
+import jawn.RawFacade
 import org.mdedetrich.akka.json.stream.JsonStreamParser
 
 trait JsonSupport {
 
-  implicit def jsonUnmarshaller[J: Facade]: FromEntityUnmarshaller[J] =
+  implicit def jsonUnmarshaller[J: RawFacade]: FromEntityUnmarshaller[J] =
     Unmarshaller
       .withMaterializer[HttpEntity, J](_ =>
         implicit mat => {

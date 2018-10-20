@@ -1,11 +1,11 @@
 name := "akka-streams-json"
 
-val currentScalaVersion = "2.12.6"
-val scala211Version     = "2.11.11"
-val circeVersion        = "0.9.3"
-val akkaVersion         = "2.5.12"
-val akkaHttpVersion     = "10.1.1"
-val jawnVersion         = "0.11.1"
+val currentScalaVersion = "2.12.7"
+val scala211Version     = "2.11.12"
+val circeVersion        = "0.10.0"
+val akkaVersion         = "2.5.17"
+val akkaHttpVersion     = "10.1.5"
+val jawnVersion         = "0.13.0"
 val scalaTestVersion    = "3.0.5"
 
 scalaVersion in ThisBuild := currentScalaVersion
