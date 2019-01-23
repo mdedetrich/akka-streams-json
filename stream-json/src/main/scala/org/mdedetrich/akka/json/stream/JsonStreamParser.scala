@@ -6,8 +6,8 @@ import akka.stream.scaladsl.{Flow, Keep, Sink}
 import akka.stream.stage.{GraphStage, GraphStageLogic, InHandler, OutHandler}
 import akka.stream._
 import akka.util.ByteString
-import jawn.AsyncParser.ValueStream
-import jawn._
+import org.typelevel.jawn.AsyncParser.ValueStream
+import org.typelevel.jawn._
 
 import scala.annotation.tailrec
 import scala.collection.mutable.ArrayBuffer
