@@ -11,10 +11,10 @@ import akka.stream.scaladsl.{Keep, Sink, Source}
 import akka.util.ByteString
 import io.circe.generic.semiauto._
 import io.circe.{Decoder, Encoder, Printer}
-import jawn.ParseException
 import org.mdedetrich.akka.http.support.CirceHttpSupport
 import org.mdedetrich.akka.stream.support.CirceStreamSupport
 import org.scalatest._
+import org.typelevel.jawn.ParseException
 
 import scala.concurrent.Await
 import scala.concurrent.duration._
@@ -210,7 +210,7 @@ class JsonSupportSpec
           Unmarshal(invalidEntity).to[Foo]
         }
         futureException.map {
-          _.getMessage should include("expected : got =")
+          _.getMessage should include("expected : got '=")
         }
       }
     }

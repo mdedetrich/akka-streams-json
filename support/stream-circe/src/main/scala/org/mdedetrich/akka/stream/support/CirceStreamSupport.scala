@@ -7,8 +7,8 @@ import akka.util.ByteString
 import io.circe.CursorOp.DownField
 import io.circe.jawn.CirceSupportParser._
 import io.circe._
-import _root_.jawn.AsyncParser
 import org.mdedetrich.akka.json.stream.JsonStreamParser
+import org.typelevel.jawn.AsyncParser
 
 trait CirceStreamSupport {
 

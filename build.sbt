@@ -2,10 +2,10 @@ name := "akka-streams-json"
 
 val currentScalaVersion = "2.12.7"
 val scala211Version     = "2.11.12"
-val circeVersion        = "0.10.0"
+val circeVersion        = "0.11.1"
 val akkaVersion         = "2.5.17"
 val akkaHttpVersion     = "10.1.5"
-val jawnVersion         = "0.13.0"
+val jawnVersion         = "0.14.1"
 val scalaTestVersion    = "3.0.5"
 
 scalaVersion in ThisBuild := currentScalaVersion
@@ -16,7 +16,7 @@ lazy val streamJson = project.in(file("stream-json")) settings (
   name := "akka-stream-json",
   libraryDependencies ++= Seq(
     "com.typesafe.akka" %% "akka-stream" % akkaVersion,
-    "org.spire-math"    %% "jawn-parser" % jawnVersion
+    "org.typelevel"     %% "jawn-parser" % jawnVersion
   )
 )
 
