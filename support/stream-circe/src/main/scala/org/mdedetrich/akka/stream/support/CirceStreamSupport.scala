@@ -5,18 +5,19 @@ import akka.NotUsed
 import akka.stream.scaladsl.Flow
 import akka.util.ByteString
 import io.circe.CursorOp.DownField
-import io.circe.jawn.CirceSupportParser._
 import io.circe._
 import org.mdedetrich.akka.json.stream.JsonStreamParser
 import org.typelevel.jawn.AsyncParser
 
+object CirceSupportParser extends io.circe.jawn.CirceSupportParser(None,true)
+
 trait CirceStreamSupport {
 
   def decode[A: Decoder]: Flow[ByteString, A, NotUsed] =
-    JsonStreamParser.flow[Json].map(decodeJson[A])
+    JsonStreamParser.flow[Json](CirceSupportParser.facade).map(decodeJson[A])
 
   def decode[A: Decoder](mode: AsyncParser.Mode): Flow[ByteString, A, NotUsed] =
-    JsonStreamParser.flow[Json](mode).map(decodeJson[A])
+    JsonStreamParser.flow[Json](mode)(CirceSupportParser.facade).map(decodeJson[A])
 
   def encode[A](implicit A: Encoder[A], P: Printer = Printer.noSpaces): Flow[A, String, NotUsed] =
     Flow[A].map(a => P.pretty(A(a)))
