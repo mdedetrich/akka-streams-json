@@ -11,7 +11,8 @@ val scalaTestVersion    = "3.0.8"
 
 scalaVersion in ThisBuild := currentScalaVersion
 crossScalaVersions in ThisBuild := Seq(currentScalaVersion, scala211Version, scala213Version)
-organization in ThisBuild := "org.mdedetrich"
+organization in ThisBuild := "com.qmee" //"org.mdedetrich"
+publishTo  in ThisBuild   := Some("Qmee Repo" at "s3://qmee-ivy-repo/")
 
 lazy val streamJson = project.in(file("stream-json")) settings (
   name := "akka-stream-json",
@@ -82,13 +83,15 @@ scmInfo in ThisBuild := Some(
 
 developers in ThisBuild := List(
   Developer("knutwalker", "Paul Horn", "", url("https://github.com/knutwalker/")),
-  Developer("mdedetrich", "Matthew de Detrich", "mdedetrich@gmail.com", url("https://github.com/mdedetrich"))
+  Developer("mdedetrich", "Matthew de Detrich", "mdedetrich@gmail.com", url("https://github.com/mdedetrich")),
+  Developer("jknight", "Jonathan Knight", "", url("https://github.com/JonathanKnight"))
 )
 
 licenses in ThisBuild += ("Apache-2.0", url("https://opensource.org/licenses/Apache-2.0"))
 
 publishMavenStyle in ThisBuild := true
 
+/*
 publishTo in ThisBuild := {
   val nexus = "https://oss.sonatype.org/"
   if (isSnapshot.value)
@@ -96,11 +99,12 @@ publishTo in ThisBuild := {
   else
     Some("releases" at nexus + "service/local/staging/deploy/maven2")
 }
+*/
 
 publishArtifact in Test in ThisBuild := false
 
-pomIncludeRepository in ThisBuild := (_ => false)
-
+//pomIncludeRepository in ThisBuild := (_ => false)
+/*
 import ReleaseTransformations._
 releaseCrossBuild := true
 releasePublishArtifactsAction := PgpKeys.publishSigned.value // Use publishSigned in publishArtifacts step
@@ -118,6 +122,8 @@ releaseProcess := Seq[ReleaseStep](
   releaseStepCommand("sonatypeReleaseAll"),
   pushChanges
 )
+
+ */
 
 val flagsFor11 = Seq(
   "-Xlint:_",
