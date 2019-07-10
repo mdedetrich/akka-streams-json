@@ -1,15 +1,22 @@
 name := "akka-streams-json"
 
-val currentScalaVersion = "2.12.7"
+val scala213Version     = "2.13.1"
+val scala212Version     = "2.12.9"
 val scala211Version     = "2.11.12"
-val circeVersion        = "0.11.1"
-val akkaVersion         = "2.5.17"
-val akkaHttpVersion     = "10.1.5"
-val jawnVersion         = "0.14.1"
-val scalaTestVersion    = "3.0.5"
 
-scalaVersion in ThisBuild := currentScalaVersion
-crossScalaVersions in ThisBuild := Seq(currentScalaVersion, scala211Version)
+val circeLatestVersion  = "0.12.1" // for Scala 2.12 and 2.13
+val circeOldVersion     = "0.11.1" // only for scala 2.11
+val akkaVersion         = "2.5.25"
+val akkaHttpVersion     = "10.1.9"
+val jawnVersion         = "0.14.2"
+val scalaTestVersion    = "3.0.8"
+
+// helper function to choose the appropriate version of circer
+def circeVersion(scalaVer: String): String =
+  if(scalaVer.startsWith("2.11") ) circeOldVersion else circeLatestVersion
+
+scalaVersion in ThisBuild := scala213Version
+crossScalaVersions in ThisBuild := Seq(scala211Version, scala212Version, scala213Version)
 organization in ThisBuild := "org.mdedetrich"
 
 lazy val streamJson = project.in(file("stream-json")) settings (
@@ -28,7 +35,7 @@ lazy val httpJson = project.in(file("http-json")) settings (
 lazy val streamCirce = project.in(file("support") / "stream-circe") settings (
   name := "akka-stream-circe",
   libraryDependencies ++= Seq("com.typesafe.akka" %% "akka-stream" % akkaVersion % Provided,
-                              "io.circe"          %% "circe-jawn"  % circeVersion)
+                              "io.circe"          %% "circe-jawn"  % circeVersion(scalaVersion.value))
 ) dependsOn streamJson
 
 lazy val httpCirce = project.in(file("support") / "http-circe") settings (
@@ -45,7 +52,7 @@ lazy val tests = project.in(file("tests")) dependsOn (streamJson, httpJson, stre
     List(
       "com.typesafe.akka" %% "akka-http"     % akkaHttpVersion  % Test,
       "org.scalatest"     %% "scalatest"     % scalaTestVersion % Test,
-      "io.circe"          %% "circe-generic" % circeVersion     % "test"
+      "io.circe"          %% "circe-generic" % circeVersion(scalaVersion.value) % "test"
     ),
   skip in publish := true
 )
@@ -59,9 +66,7 @@ scalacOptions in ThisBuild ++= Seq(
   "-unchecked", // additional warnings where generated code depends on assumptions
   "-Xlint", // recommended additional warnings
   "-Xcheckinit", // runtime error when a val is not initialized due to trait hierarchies (instead of NPE somewhere else)
-  "-Ywarn-adapted-args", // Warn if an argument list is modified to match the receiver
   "-Ywarn-value-discard", // Warn when non-Unit expression results are unused
-  "-Ywarn-inaccessible",
   "-Ywarn-dead-code",
   "-language:postfixOps"
 )
@@ -69,10 +74,6 @@ scalacOptions in ThisBuild ++= Seq(
 Defaults.itSettings
 
 configs(IntegrationTest)
-
-val enumeratumVersion      = "1.5.12"
-val enumeratumCirceVersion = "1.5.14"
-val akkaStreamJson         = "3.4.0"
 
 homepage in ThisBuild := Some(url("https://github.com/mdedetrich/akka-streams-json"))
 
@@ -129,12 +130,22 @@ val flagsFor11 = Seq(
 val flagsFor12 = Seq(
   "-Xlint:_",
   "-Ywarn-infer-any",
+  "-Ywarn-adapted-args", // Warn if an argument list is modified to match the receiver
+  "-Ywarn-inaccessible",
+  "-Ywarn-infer-any",
+  "-opt-inline-from:<sources>"
+)
+
+val flagsFor13 = Seq(
+  "-Xlint:_",
   "-opt-inline-from:<sources>"
 )
 
 scalacOptions in ThisBuild ++= {
   CrossVersion.partialVersion(scalaVersion.value) match {
-    case Some((2, n)) if n >= 12 =>
+    case Some((2, n)) if n == 13 =>
+      flagsFor13
+    case Some((2, n)) if n == 12 =>
       flagsFor12
     case Some((2, n)) if n == 11 =>
       flagsFor11
