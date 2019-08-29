@@ -1,11 +1,11 @@
-package org.mdedetrich.akka.http.support
+package com.qmee.akka.http.support
 
 import akka.http.scaladsl.marshalling.{Marshaller, ToEntityMarshaller}
 import akka.http.scaladsl.model.MediaTypes.`application/json`
 import akka.http.scaladsl.unmarshalling.FromEntityUnmarshaller
+import com.qmee.akka.http.JsonSupport
+import com.qmee.akka.stream.support.{CirceStreamSupport, CirceSupportParser}
 import io.circe.{Decoder, Encoder, Json, Printer}
-import org.mdedetrich.akka.http.JsonSupport
-import org.mdedetrich.akka.stream.support.{CirceStreamSupport, CirceSupportParser}
 
 trait CirceHttpSupport extends JsonSupport {
 

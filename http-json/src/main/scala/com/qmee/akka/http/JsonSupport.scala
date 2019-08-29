@@ -1,10 +1,10 @@
-package org.mdedetrich.akka.http
+package com.qmee.akka.http
 
 import akka.http.scaladsl.model.HttpEntity
 import akka.http.scaladsl.model.MediaTypes.`application/json`
 import akka.http.scaladsl.unmarshalling.{FromEntityUnmarshaller, Unmarshaller}
 import akka.http.scaladsl.util.FastFuture
-import org.mdedetrich.akka.json.stream.JsonStreamParser
+import com.qmee.akka.json.stream.JsonStreamParser
 import org.typelevel.jawn.RawFacade
 
 trait JsonSupport {

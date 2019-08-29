@@ -1,4 +1,4 @@
-package org.mdedetrich.akka.http
+package com.qmee.akka.http
 
 import akka.actor.ActorSystem
 import akka.http.scaladsl.marshalling.Marshal
@@ -9,10 +9,10 @@ import akka.http.scaladsl.unmarshalling.Unmarshal
 import akka.stream.ActorMaterializer
 import akka.stream.scaladsl.{Keep, Sink, Source}
 import akka.util.ByteString
+import com.qmee.akka.http.support.CirceHttpSupport
+import com.qmee.akka.stream.support.CirceStreamSupport
 import io.circe.generic.semiauto._
 import io.circe.{Decoder, Encoder, Printer}
-import org.mdedetrich.akka.http.support.CirceHttpSupport
-import org.mdedetrich.akka.stream.support.CirceStreamSupport
 import org.scalatest._
 import org.typelevel.jawn.ParseException
 

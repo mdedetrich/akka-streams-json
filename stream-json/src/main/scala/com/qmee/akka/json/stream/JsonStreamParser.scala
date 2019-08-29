@@ -1,10 +1,12 @@
-package org.mdedetrich.akka.json.stream
+package com.qmee.akka.json.stream
+
+import java.nio.ByteBuffer
 
 import akka.NotUsed
 import akka.stream.Attributes.name
+import akka.stream._
 import akka.stream.scaladsl.{Flow, Keep, Sink}
 import akka.stream.stage.{GraphStage, GraphStageLogic, InHandler, OutHandler}
-import akka.stream._
 import akka.util.ByteString
 import org.typelevel.jawn.AsyncParser.ValueStream
 import org.typelevel.jawn._
@@ -13,7 +15,6 @@ import scala.annotation.tailrec
 import scala.collection.mutable.ArrayBuffer
 import scala.concurrent.Future
 import scala.util.Try
-import java.nio.ByteBuffer
 
 object JsonStreamParser {
 

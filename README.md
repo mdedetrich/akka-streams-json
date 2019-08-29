@@ -58,8 +58,8 @@ You just add the [jawn support facade](https://github.com/non/jawn#supporting-ex
 of your choice and you will can parsed into their respective Json AST.
 
 
-For Http support, either `import org.mdedetrich.akka.http.JsonSupport._`
-or mixin `... with org.mdedetrich.akka.http.JsonSupport`.
+For Http support, either `import com.akka.http.JsonSupport._`
+or mixin `... with com.qmee.akka.http.JsonSupport`.
 
 Given an implicit jawn facade, this enable you to decode into the respective Json AST
 using the Akka HTTP marshalling framework. As jawn is only about parsing and does not abstract
@@ -84,7 +84,7 @@ Adding support for a specific framework is
 These support modules allow you to directly marshall from/unmarshall into your data types
 using circes `Decoder` and `Encoder` type classes.
 
-Just mixin or import `org.mdedetrich.akka.http.support.CirceHttpSupport` for Http
+Just mixin or import `com.qmee.akka.http.support.CirceHttpSupport` for Http
 or pipe your `Source[ByteString, _].via(org.mdedetrich.akka.stream.CirceStreamSupport.decode[A])`
 to get a `Source[A, _]`.
 

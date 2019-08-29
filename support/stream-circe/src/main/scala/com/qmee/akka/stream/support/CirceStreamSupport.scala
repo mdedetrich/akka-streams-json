@@ -1,15 +1,12 @@
-package org.mdedetrich.akka.stream
-package support
+package com.qmee.akka.stream.support
 
 import akka.NotUsed
 import akka.stream.scaladsl.Flow
 import akka.util.ByteString
+import com.qmee.akka.json.stream.JsonStreamParser
 import io.circe.CursorOp.DownField
 import io.circe._
-import org.mdedetrich.akka.json.stream.JsonStreamParser
 import org.typelevel.jawn.AsyncParser
-
-object CirceSupportParser extends io.circe.jawn.CirceSupportParser(None,true)
 
 trait CirceStreamSupport {
 
@@ -25,7 +22,7 @@ trait CirceStreamSupport {
   case class JsonParsingException(df: DecodingFailure, cursor: HCursor)
       extends Exception(errorMessage(df.history, cursor, df.message), df)
 
-  private[mdedetrich] def decodeJson[A](json: Json)(implicit decoder: Decoder[A]): A = {
+  private[qmee] def decodeJson[A](json: Json)(implicit decoder: Decoder[A]): A = {
     val cursor = json.hcursor
     decoder(cursor) match {
       case Right(e) => e
