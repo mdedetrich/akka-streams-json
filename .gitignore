@@ -15,8 +15,6 @@ project/plugins/project/
 .history
 .cache
 .lib/
-.idea/
-*.iml
 
 http-json/dist/*
 http-json/lib_managed/
