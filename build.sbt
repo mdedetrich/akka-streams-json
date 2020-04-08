@@ -2,32 +2,22 @@ name := "akka-streams-json"
 
 val scala213Version = "2.13.1"
 val scala212Version = "2.12.11"
-val scala211Version = "2.11.12"
 
-val circeLatestVersion = "0.13.0" // for Scala 2.12 and 2.13
-val circeOldVersion    = "0.11.1" // only for scala 2.11
-val akkaVersion        = "2.5.26"
-val akkaHttpVersion    = "10.1.11"
-val jawnOldVersion     = "0.14.2"
-val jawnLatestVersion  = "1.0.0"
-val scalaTestVersion   = "3.0.8"
-
-// helper function to choose the appropriate version of circer
-def circeVersion(scalaVer: String): String =
-  if (scalaVer.startsWith("2.11")) circeOldVersion else circeLatestVersion
-
-def jawnVersion(scalaVer: String): String =
-  if (scalaVer.startsWith("2.11")) jawnOldVersion else jawnLatestVersion
+val circeVersion     = "0.13.0" // for Scala 2.12 and 2.13
+val akkaVersion      = "2.6.3"
+val akkaHttpVersion  = "10.1.11"
+val jawnVersion      = "1.0.0"
+val scalaTestVersion = "3.0.8"
 
 scalaVersion in ThisBuild := scala213Version
-crossScalaVersions in ThisBuild := Seq(scala211Version, scala212Version, scala213Version)
+crossScalaVersions in ThisBuild := Seq(scala212Version, scala213Version)
 organization in ThisBuild := "org.mdedetrich"
 
 lazy val streamJson = project.in(file("stream-json")) settings (
   name := "akka-stream-json",
   libraryDependencies ++= Seq(
     "com.typesafe.akka" %% "akka-stream" % akkaVersion,
-    "org.typelevel"     %% "jawn-parser" % jawnVersion(scalaVersion.value)
+    "org.typelevel"     %% "jawn-parser" % jawnVersion
   )
 )
 
@@ -39,7 +29,7 @@ lazy val httpJson = project.in(file("http-json")) settings (
 lazy val streamCirce = project.in(file("support") / "stream-circe") settings (
   name := "akka-stream-circe",
   libraryDependencies ++= Seq("com.typesafe.akka" %% "akka-stream" % akkaVersion % Provided,
-                              "io.circe"          %% "circe-jawn"  % circeVersion(scalaVersion.value))
+                              "io.circe"          %% "circe-jawn"  % circeVersion)
 ) dependsOn streamJson
 
 lazy val httpCirce = project.in(file("support") / "http-circe") settings (
@@ -54,9 +44,9 @@ lazy val parent = project in file(".") dependsOn (httpJson, httpCirce) aggregate
 lazy val tests = project.in(file("tests")) dependsOn (streamJson, httpJson, streamCirce, httpCirce) settings (
   libraryDependencies ++=
     List(
-      "com.typesafe.akka" %% "akka-http"     % akkaHttpVersion                  % Test,
-      "org.scalatest"     %% "scalatest"     % scalaTestVersion                 % Test,
-      "io.circe"          %% "circe-generic" % circeVersion(scalaVersion.value) % "test"
+      "com.typesafe.akka" %% "akka-http"     % akkaHttpVersion  % Test,
+      "org.scalatest"     %% "scalatest"     % scalaTestVersion % Test,
+      "io.circe"          %% "circe-generic" % circeVersion     % Test
     ),
   skip in publish := true
 )
@@ -123,14 +113,6 @@ releaseProcess := Seq[ReleaseStep](
   pushChanges
 )
 
-val flagsFor11 = Seq(
-  "-Xlint:_",
-  "-Yconst-opt",
-  "-Ywarn-infer-any",
-  "-Yclosure-elim",
-  "-Ydead-code"
-)
-
 val flagsFor12 = Seq(
   "-Xlint:_",
   "-Ywarn-infer-any",
@@ -151,8 +133,6 @@ scalacOptions in ThisBuild ++= {
       flagsFor13
     case Some((2, n)) if n == 12 =>
       flagsFor12
-    case Some((2, n)) if n == 11 =>
-      flagsFor11
   }
 }
 

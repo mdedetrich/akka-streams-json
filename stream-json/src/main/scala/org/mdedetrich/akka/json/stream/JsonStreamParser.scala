@@ -8,7 +8,6 @@ import akka.stream._
 import akka.util.ByteString
 import org.typelevel.jawn.AsyncParser.ValueStream
 import org.typelevel.jawn._
-import CrossVersionImports.JFacade
 
 import scala.annotation.tailrec
 import scala.collection.mutable.ArrayBuffer
@@ -20,34 +19,34 @@ object JsonStreamParser {
 
   private[this] val jsonStream = name("json-stream")
 
-  def apply[J: JFacade]: Graph[FlowShape[ByteString, J], NotUsed] =
+  def apply[J: Facade]: Graph[FlowShape[ByteString, J], NotUsed] =
     apply[J](ValueStream)
 
-  def apply[J: JFacade](mode: AsyncParser.Mode): Graph[FlowShape[ByteString, J], NotUsed] =
+  def apply[J: Facade](mode: AsyncParser.Mode): Graph[FlowShape[ByteString, J], NotUsed] =
     new JsonStreamParser(mode)
 
-  def flow[J: JFacade]: Flow[ByteString, J, NotUsed] =
+  def flow[J: Facade]: Flow[ByteString, J, NotUsed] =
     Flow.fromGraph(apply[J]).withAttributes(jsonStream)
 
-  def flow[J: JFacade](mode: AsyncParser.Mode): Flow[ByteString, J, NotUsed] =
+  def flow[J: Facade](mode: AsyncParser.Mode): Flow[ByteString, J, NotUsed] =
     Flow.fromGraph(apply[J](mode)).withAttributes(jsonStream)
 
-  def head[J: JFacade]: Sink[ByteString, Future[J]] =
+  def head[J: Facade]: Sink[ByteString, Future[J]] =
     flow.toMat(Sink.head)(Keep.right)
 
-  def head[J: JFacade](mode: AsyncParser.Mode): Sink[ByteString, Future[J]] =
+  def head[J: Facade](mode: AsyncParser.Mode): Sink[ByteString, Future[J]] =
     flow(mode).toMat(Sink.head)(Keep.right)
 
-  def headOption[J: JFacade]: Sink[ByteString, Future[Option[J]]] =
+  def headOption[J: Facade]: Sink[ByteString, Future[Option[J]]] =
     flow.toMat(Sink.headOption)(Keep.right)
 
-  def headOption[J: JFacade](mode: AsyncParser.Mode): Sink[ByteString, Future[Option[J]]] =
+  def headOption[J: Facade](mode: AsyncParser.Mode): Sink[ByteString, Future[Option[J]]] =
     flow(mode).toMat(Sink.headOption)(Keep.right)
 
-  def parse[J: JFacade](bytes: ByteString): Try[J] =
+  def parse[J: Facade](bytes: ByteString): Try[J] =
     Parser.parseFromByteBuffer(bytes.asByteBuffer)
 
-  private final class ParserLogic[J: JFacade](parser: AsyncParser[J], shape: FlowShape[ByteString, J])
+  private final class ParserLogic[J: Facade](parser: AsyncParser[J], shape: FlowShape[ByteString, J])
       extends GraphStageLogic(shape) {
     private[this] val in      = shape.in
     private[this] val out     = shape.out
@@ -103,7 +102,7 @@ object JsonStreamParser {
   }
 }
 
-final class JsonStreamParser[J: JFacade] private (mode: AsyncParser.Mode)
+final class JsonStreamParser[J: Facade] private (mode: AsyncParser.Mode)
     extends GraphStage[FlowShape[ByteString, J]] {
   private[this] val in  = Inlet[ByteString]("Json.in")
   private[this] val out = Outlet[J]("Json.out")
