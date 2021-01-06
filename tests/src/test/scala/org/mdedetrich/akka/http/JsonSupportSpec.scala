@@ -6,7 +6,6 @@ import akka.http.scaladsl.model.HttpCharsets.`UTF-8`
 import akka.http.scaladsl.model.MediaTypes.`application/json`
 import akka.http.scaladsl.model.{HttpEntity, RequestEntity, UniversalEntity}
 import akka.http.scaladsl.unmarshalling.Unmarshal
-import akka.stream.ActorMaterializer
 import akka.stream.scaladsl.{Keep, Sink, Source}
 import akka.util.ByteString
 import io.circe.generic.semiauto._
@@ -57,7 +56,7 @@ class JsonSupportSpec
       |}""".stripMargin.trim
 
   implicit val system = ActorSystem()
-  implicit val mat    = ActorMaterializer()
+//  implicit val mat    = system
 
   "enable marshalling of an A for which an Encoder[A] exists" can {
     "The marshalled entity" should {

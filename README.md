@@ -36,8 +36,8 @@ There are two main modules, `akka-stream-json` and `akka-http-json`.
 
 ```
 libraryDependencies ++= List(
-  "org.mdedetrich" %% "akka-stream-json" % "0.6.0",
-  "org.mdedetrich" %% "akka-http-json" % "0.6.0"
+  "org.mdedetrich" %% "akka-stream-json" % "0.7.0",
+  "org.mdedetrich" %% "akka-http-json" % "0.7.0"
 )
 ```
 

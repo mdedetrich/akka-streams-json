@@ -18,7 +18,7 @@ trait CirceHttpSupport extends JsonSupport {
     circeJsonUnmarshaller.map(CirceStreamSupport.decodeJson[A])
 
   implicit def circeJsonMarshaller(implicit P: Printer = Printer.noSpaces): ToEntityMarshaller[Json] =
-    Marshaller.StringMarshaller.wrap(`application/json`)(P.pretty)
+    Marshaller.StringMarshaller.wrap(`application/json`)(P.print)
 
   implicit def circeMarshaller[A](implicit A: Encoder[A], P: Printer = Printer.noSpaces): ToEntityMarshaller[A] =
     circeJsonMarshaller.compose(A.apply)

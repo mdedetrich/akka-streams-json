@@ -53,8 +53,8 @@ object JsonStreamParser {
     private[this] val scratch = new ArrayBuffer[J](64)
 
     setHandler(out, new OutHandler {
-      override def onPull(): Unit             = pull(in)
-      override def onDownstreamFinish(): Unit = downstreamFinish()
+      override def onPull(): Unit                                 = pull(in)
+      override def onDownstreamFinish(throwable: Throwable): Unit = downstreamFinish()
     })
     setHandler(in, new InHandler {
       override def onPush(): Unit           = upstreamPush()
@@ -102,8 +102,7 @@ object JsonStreamParser {
   }
 }
 
-final class JsonStreamParser[J: Facade] private (mode: AsyncParser.Mode)
-    extends GraphStage[FlowShape[ByteString, J]] {
+final class JsonStreamParser[J: Facade] private (mode: AsyncParser.Mode) extends GraphStage[FlowShape[ByteString, J]] {
   private[this] val in  = Inlet[ByteString]("Json.in")
   private[this] val out = Outlet[J]("Json.out")
   override val shape    = FlowShape(in, out)
