@@ -3,11 +3,11 @@ name := "akka-streams-json"
 val scala213Version = "2.13.6"
 val scala212Version = "2.12.14"
 
-val circeVersion     = "0.13.0" // for Scala 2.12 and 2.13
-val akkaVersion      = "2.6.10"
-val akkaHttpVersion  = "10.2.2"
-val jawnVersion      = "1.0.3"
-val scalaTestVersion = "3.0.8"
+val circeVersion     = "0.14.1"
+val akkaVersion      = "2.6.15"
+val akkaHttpVersion  = "10.2.4"
+val jawnVersion      = "1.2.0"
+val scalaTestVersion = "3.2.9"
 
 ThisBuild / scalaVersion       := scala213Version
 ThisBuild / crossScalaVersions := Seq(scala212Version, scala213Version)

@@ -13,6 +13,8 @@ import io.circe.{Decoder, Encoder, Printer}
 import org.mdedetrich.akka.http.support.CirceHttpSupport
 import org.mdedetrich.akka.stream.support.CirceStreamSupport
 import org.scalatest._
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec.AsyncWordSpec
 import org.typelevel.jawn.ParseException
 
 import scala.concurrent.Await
