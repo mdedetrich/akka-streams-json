@@ -9,9 +9,9 @@ val akkaHttpVersion  = "10.2.2"
 val jawnVersion      = "1.0.3"
 val scalaTestVersion = "3.0.8"
 
-scalaVersion in ThisBuild       := scala213Version
-crossScalaVersions in ThisBuild := Seq(scala212Version, scala213Version)
-organization in ThisBuild       := "org.mdedetrich"
+ThisBuild / scalaVersion       := scala213Version
+ThisBuild / crossScalaVersions := Seq(scala212Version, scala213Version)
+ThisBuild / organization       := "org.mdedetrich"
 
 lazy val streamJson = project
   .in(file("stream-json"))
@@ -59,7 +59,7 @@ lazy val parent = project
   .dependsOn(httpJson, httpCirce)
   .aggregate(streamJson, httpJson, streamCirce, httpCirce, tests)
   .settings(
-    skip in publish := true
+    publish / skip := true
   )
 
 lazy val tests = project
@@ -72,10 +72,10 @@ lazy val tests = project
         "org.scalatest"     %% "scalatest"     % scalaTestVersion % Test,
         "io.circe"          %% "circe-generic" % circeVersion     % Test
       ),
-    skip in publish := true
+    publish / skip := true
   )
 
-scalacOptions in ThisBuild ++= Seq(
+ThisBuild / scalacOptions ++= Seq(
   "-target:jvm-1.8",
   "-encoding",
   "UTF-8",
@@ -93,22 +93,22 @@ Defaults.itSettings
 
 configs(IntegrationTest)
 
-homepage in ThisBuild := Some(url("https://github.com/mdedetrich/akka-streams-json"))
+ThisBuild / homepage := Some(url("https://github.com/mdedetrich/akka-streams-json"))
 
-scmInfo in ThisBuild := Some(
+ThisBuild / scmInfo := Some(
   ScmInfo(url("https://github.com/mdedetrich/akka-streams-json"), "git@github.com:mdedetrich/akka-streams-json.git")
 )
 
-developers in ThisBuild := List(
+ThisBuild / developers := List(
   Developer("knutwalker", "Paul Horn", "", url("https://github.com/knutwalker/")),
   Developer("mdedetrich", "Matthew de Detrich", "mdedetrich@gmail.com", url("https://github.com/mdedetrich"))
 )
 
-licenses in ThisBuild += ("Apache-2.0", url("https://opensource.org/licenses/Apache-2.0"))
+ThisBuild / licenses += ("Apache-2.0", url("https://opensource.org/licenses/Apache-2.0"))
 
-publishMavenStyle in ThisBuild := true
+ThisBuild / publishMavenStyle := true
 
-publishTo in ThisBuild := {
+ThisBuild / publishTo := {
   val nexus = "https://oss.sonatype.org/"
   if (isSnapshot.value)
     Some("snapshots" at nexus + "content/repositories/snapshots")
@@ -116,9 +116,8 @@ publishTo in ThisBuild := {
     Some("releases" at nexus + "service/local/staging/deploy/maven2")
 }
 
-publishArtifact in Test in ThisBuild := false
-
-pomIncludeRepository in ThisBuild := (_ => false)
+ThisBuild / test / publishArtifact := false
+ThisBuild / pomIncludeRepository   := (_ => false)
 
 import ReleaseTransformations._
 
@@ -153,7 +152,7 @@ val flagsFor13 = Seq(
   "-opt-inline-from:<sources>"
 )
 
-scalacOptions in ThisBuild ++= {
+ThisBuild / scalacOptions ++= {
   CrossVersion.partialVersion(scalaVersion.value) match {
     case Some((2, n)) if n == 13 =>
       flagsFor13
@@ -162,4 +161,4 @@ scalacOptions in ThisBuild ++= {
   }
 }
 
-parallelExecution in IntegrationTest := false
+IntegrationTest / parallelExecution := false
