@@ -52,14 +52,18 @@ object JsonStreamParser {
     private[this] val out     = shape.out
     private[this] val scratch = new ArrayBuffer[J](64)
 
-    setHandler(out, new OutHandler {
-      override def onPull(): Unit                                 = pull(in)
-      override def onDownstreamFinish(throwable: Throwable): Unit = downstreamFinish()
-    })
-    setHandler(in, new InHandler {
-      override def onPush(): Unit           = upstreamPush()
-      override def onUpstreamFinish(): Unit = finishParser()
-    })
+    setHandler(out,
+               new OutHandler {
+                 override def onPull(): Unit                                 = pull(in)
+                 override def onDownstreamFinish(throwable: Throwable): Unit = downstreamFinish()
+               }
+    )
+    setHandler(in,
+               new InHandler {
+                 override def onPush(): Unit           = upstreamPush()
+                 override def onUpstreamFinish(): Unit = finishParser()
+               }
+    )
 
     private def upstreamPush(): Unit = {
       scratch.clear()

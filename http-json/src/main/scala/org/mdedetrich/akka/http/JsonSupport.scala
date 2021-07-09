@@ -16,7 +16,8 @@ trait JsonSupport {
           case HttpEntity.Strict(_, data) =>
             FastFuture(JsonStreamParser.parse[J](data))
           case entity => entity.dataBytes.runWith(JsonStreamParser.head[J])
-      })
+        }
+      )
       .forContentTypes(`application/json`)
 }
 
