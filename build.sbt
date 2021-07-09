@@ -1,7 +1,7 @@
 name := "akka-streams-json"
 
-val scala213Version = "2.13.4"
-val scala212Version = "2.12.11"
+val scala213Version = "2.13.6"
+val scala212Version = "2.12.14"
 
 val circeVersion     = "0.13.0" // for Scala 2.12 and 2.13
 val akkaVersion      = "2.6.10"
