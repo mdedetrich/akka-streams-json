@@ -162,3 +162,22 @@ ThisBuild / scalacOptions ++= {
 }
 
 IntegrationTest / parallelExecution := false
+
+ThisBuild / githubWorkflowBuild := Seq(
+  WorkflowStep.Sbt(List("mimaReportBinaryIssues"), name = Some("Report binary compatibility issues")),
+  WorkflowStep.Sbt(List("clean", "coverage", "test"), name = Some("Build project"))
+)
+
+ThisBuild / githubWorkflowBuildPostamble ++= Seq(
+  // See https://github.com/scoverage/sbt-coveralls#github-actions-integration
+  WorkflowStep.Sbt(
+    List("coverageReport"),
+    name = Some("Upload coverage data")
+  )
+)
+
+// This is causing problems with env variables being passed in, see
+// https://github.com/sbt/sbt/issues/6468
+ThisBuild / githubWorkflowUseSbtThinClient := false
+
+ThisBuild / githubWorkflowPublishTargetBranches := Seq()
