@@ -162,3 +162,14 @@ ThisBuild / scalacOptions ++= {
 }
 
 IntegrationTest / parallelExecution := false
+
+ThisBuild / githubWorkflowBuild := Seq(
+  WorkflowStep.Sbt(List("mimaReportBinaryIssues")),
+  WorkflowStep.Sbt(List("clean")),
+  WorkflowStep.Sbt(List("coverage")),
+  WorkflowStep.Sbt(List("test"))
+)
+
+ThisBuild / githubWorkflowBuildPostamble ++= Seq(
+  WorkflowStep.Sbt(List("coverageReport"))
+)
