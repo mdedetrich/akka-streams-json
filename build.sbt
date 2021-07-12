@@ -145,12 +145,14 @@ val flagsFor12 = Seq(
   "-Ywarn-adapted-args", // Warn if an argument list is modified to match the receiver
   "-Ywarn-inaccessible",
   "-Ywarn-infer-any",
-  "-opt-inline-from:<sources>"
+  "-opt-inline-from:<sources>",
+  "-opt:l:method"
 )
 
 val flagsFor13 = Seq(
   "-Xlint:_",
-  "-opt-inline-from:<sources>"
+  "-opt-inline-from:<sources>",
+  "-opt:l:method"
 )
 
 ThisBuild / scalacOptions ++= {
