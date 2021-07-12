@@ -9,9 +9,10 @@ val akkaHttpVersion  = "10.2.4"
 val jawnVersion      = "1.2.0"
 val scalaTestVersion = "3.2.9"
 
-ThisBuild / scalaVersion       := scala213Version
-ThisBuild / crossScalaVersions := Seq(scala212Version, scala213Version)
-ThisBuild / organization       := "org.mdedetrich"
+ThisBuild / scalaVersion         := scala213Version
+ThisBuild / crossScalaVersions   := Seq(scala212Version, scala213Version)
+ThisBuild / organization         := "org.mdedetrich"
+ThisBuild / mimaFailOnNoPrevious := false // Set this to true when we start caring about binary compatibility
 
 lazy val streamJson = project
   .in(file("stream-json"))
