@@ -119,9 +119,9 @@ ThisBuild / pomIncludeRepository   := (_ => false)
 
 import ReleaseTransformations._
 
-releaseCrossBuild             := true
-releasePublishArtifactsAction := PgpKeys.publishSigned.value // Use publishSigned in publishArtifacts step
-releaseProcess := Seq[ReleaseStep](
+ThisBuild / releaseCrossBuild             := true
+ThisBuild / releasePublishArtifactsAction := PgpKeys.publishSigned.value // Use publishSigned in publishArtifacts step
+ThisBuild / releaseProcess := Seq[ReleaseStep](
   checkSnapshotDependencies,
   inquireVersions,
   runClean,
