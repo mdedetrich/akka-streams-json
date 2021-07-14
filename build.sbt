@@ -113,7 +113,7 @@ ThisBuild / developers := List(
 ThisBuild / licenses += ("Apache-2.0", url("https://opensource.org/licenses/Apache-2.0"))
 
 ThisBuild / publishMavenStyle      := true
-ThisBuild / publishTo              := sonatypePublishToBundle.value
+ThisBuild / publishTo              := sonatypePublishTo.value
 ThisBuild / test / publishArtifact := false
 ThisBuild / pomIncludeRepository   := (_ => false)
 
@@ -132,7 +132,7 @@ releaseProcess := Seq[ReleaseStep](
   publishArtifacts,
   setNextVersion,
   commitNextVersion,
-  releaseStepCommand("sonatypeBundleRelease"),
+  releaseStepCommand("sonatypeReleaseAll"),
   pushChanges
 )
 
