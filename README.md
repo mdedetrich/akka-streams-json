@@ -36,13 +36,13 @@ There are two main modules, `akka-stream-json` and `akka-http-json`.
 
 ```
 libraryDependencies ++= List(
-  "org.mdedetrich" %% "akka-stream-json" % "0.7.0",
-  "org.mdedetrich" %% "akka-http-json" % "0.7.0"
+  "org.mdedetrich" %% "akka-stream-json" % "0.8.0",
+  "org.mdedetrich" %% "akka-http-json" % "0.8.0"
 )
 ```
 
-`akka-streams-json` depends on `jawn-parser` at version `1.0.0` for the `0.6.x` series
-The circe submodule depends on version `0.13.x` of `circe-jawn` for `0.6.x` series
+`akka-streams-json` depends on `jawn-parser` at version `1.0.0` for the `0.7.x` series
+The circe submodule depends on version `0.13.x` of `circe-jawn` for `0.7.x` series
 
 `akka-stream-json` is published for Scala 2.13 and 2.12.
 
@@ -68,12 +68,12 @@ over rendering, you'll only get an Unmarshaller.
 
 ```
 libraryDependencies ++= List(
-  "org.mdedetrich" %% "akka-stream-circe" % "0.6.0",
-  "org.mdedetrich" %% "akka-http-circe" % "0.6.0"
+  "org.mdedetrich" %% "akka-stream-circe" % "0.8.0",
+  "org.mdedetrich" %% "akka-http-circe" % "0.8.0"
 )
 ```
 
-(Using circe 0.13.x)
+(Using circe 0.14.x)
 
 Adding support for a specific framework is
 [quite](support/stream-circe/src/main/scala/org/mdedetrich/akka/stream/support/CirceStreamSupport.scala)
