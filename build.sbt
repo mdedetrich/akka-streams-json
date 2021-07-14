@@ -1,3 +1,5 @@
+import com.jsuereth.sbtpgp.PgpKeys.publishSigned
+
 name := "akka-streams-json"
 
 val scala213Version = "2.13.6"
@@ -61,7 +63,8 @@ lazy val parent = project
   .dependsOn(httpJson, httpCirce)
   .aggregate(streamJson, httpJson, streamCirce, httpCirce, tests)
   .settings(
-    publish / skip := true
+    publish / skip       := true,
+    publishSigned / skip := true
   )
 
 lazy val tests = project
@@ -74,7 +77,8 @@ lazy val tests = project
         "org.scalatest"     %% "scalatest"     % scalaTestVersion % Test,
         "io.circe"          %% "circe-generic" % circeVersion     % Test
       ),
-    publish / skip := true
+    publish / skip       := true,
+    publishSigned / skip := true
   )
 
 ThisBuild / scalacOptions ++= Seq(
