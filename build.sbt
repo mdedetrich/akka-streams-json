@@ -13,6 +13,7 @@ ThisBuild / crossScalaVersions   := Seq(scala212Version, scala213Version)
 ThisBuild / scalaVersion         := (ThisBuild / crossScalaVersions).value.last
 ThisBuild / organization         := "org.mdedetrich"
 ThisBuild / mimaFailOnNoPrevious := false // Set this to true when we start caring about binary compatibility
+ThisBuild / versionScheme        := Some(VersionScheme.EarlySemVer)
 
 lazy val streamJson = project
   .in(file("stream-json"))
