@@ -108,16 +108,8 @@ ThisBuild / developers := List(
 
 ThisBuild / licenses += ("Apache-2.0", url("https://opensource.org/licenses/Apache-2.0"))
 
-ThisBuild / publishMavenStyle := true
-
-ThisBuild / publishTo := {
-  val nexus = "https://oss.sonatype.org/"
-  if (isSnapshot.value)
-    Some("snapshots" at nexus + "content/repositories/snapshots")
-  else
-    Some("releases" at nexus + "service/local/staging/deploy/maven2")
-}
-
+ThisBuild / publishMavenStyle      := true
+ThisBuild / publishTo              := sonatypePublishToBundle.value
 ThisBuild / test / publishArtifact := false
 ThisBuild / pomIncludeRepository   := (_ => false)
 
