@@ -64,7 +64,8 @@ lazy val parent = project
   .aggregate(streamJson, httpJson, streamCirce, httpCirce, tests)
   .settings(
     publish / skip       := true,
-    publishSigned / skip := true
+    publishSigned / skip := true,
+    publishLocal / skip  := true
   )
 
 lazy val tests = project
@@ -78,7 +79,8 @@ lazy val tests = project
         "io.circe"          %% "circe-generic" % circeVersion     % Test
       ),
     publish / skip       := true,
-    publishSigned / skip := true
+    publishSigned / skip := true,
+    publishLocal / skip  := true
   )
 
 ThisBuild / scalacOptions ++= Seq(
