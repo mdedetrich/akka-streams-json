@@ -168,6 +168,28 @@ class JsonSupportSpec
       }
     }
 
+    "Multiple, lazily streamed json entities via a flow in an JSON array" should {
+      val entity = mkEntity(s"[$goodJson,$goodJson,$goodJson]")
+      "produce all values" in {
+        val parsed = entity.dataBytes.via(decode[List[Foo]]).runWith(Sink.seq)
+
+        parsed.map {
+          _.flatten shouldBe Seq(foo, foo, foo)
+        }
+      }
+    }
+
+    "Multiple, lazily streamed json entities via a flow in an JSON array and null element" should {
+      val entity = mkEntity(s"[$goodJson,$goodJson,$goodJson,null]")
+      "produce all values" in {
+        val parsed = entity.dataBytes.via(decode[List[Option[Foo]]]).runWith(Sink.seq)
+
+        parsed.map {
+          _.flatten shouldBe List(Some(foo), Some(foo), Some(foo), None)
+        }
+      }
+    }
+
     "A incomplete, lazily streamed json entity" should {
       val incompleteEntity = mkEntity(incompleteJson)
       "produce a parse exception with the message 'exhausted input'" in {
