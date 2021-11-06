@@ -190,6 +190,18 @@ class JsonSupportSpec
       }
     }
 
+    "Multiple, lazily streamed incomplete json entities via a flow in an JSON array and null element" should {
+      val rest   = """":[true,false]}"""
+      val entity = mkEntity(s"[$incompleteJson$rest,$incompleteJson$rest,$incompleteJson$rest]")
+      "produce all values" in {
+        val parsed = entity.dataBytes.via(decode[List[Foo]]).runWith(Sink.seq)
+
+        parsed.map {
+          _.flatten shouldBe Seq(foo, foo, foo)
+        }
+      }
+    }
+
     "A incomplete, lazily streamed json entity" should {
       val incompleteEntity = mkEntity(incompleteJson)
       "produce a parse exception with the message 'exhausted input'" in {
