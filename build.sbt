@@ -186,3 +186,9 @@ ThisBuild / githubWorkflowBuildPostamble ++= Seq(
 ThisBuild / githubWorkflowUseSbtThinClient := false
 
 ThisBuild / githubWorkflowPublishTargetBranches := Seq()
+
+ThisBuild / githubWorkflowJavaVersions := List(
+  JavaSpec.temurin("8"),
+  JavaSpec.temurin("11"),
+  JavaSpec.temurin("17")
+)
