@@ -6,7 +6,7 @@ val scala213Version = "2.13.8"
 val scala212Version = "2.12.15"
 
 val circeVersion     = "0.14.1"
-val akkaVersion      = "2.6.18"
+val akkaVersion      = "2.6.19"
 val akkaHttpVersion  = "10.2.9"
 val jawnVersion      = "1.3.2"
 val scalaTestVersion = "3.2.11"
@@ -22,7 +22,7 @@ lazy val streamJson = project
   .settings(
     name := "akka-stream-json",
     libraryDependencies ++= Seq(
-      "com.typesafe.akka" %% "akka-stream" % akkaVersion,
+      "com.typesafe.akka" %% "akka-stream" % akkaVersion % Provided,
       "org.typelevel"     %% "jawn-parser" % jawnVersion
     )
   )
@@ -32,7 +32,8 @@ lazy val httpJson = project
   .settings(
     name := "akka-http-json",
     libraryDependencies ++= Seq(
-      "com.typesafe.akka" %% "akka-http" % akkaHttpVersion % Provided
+      "com.typesafe.akka" %% "akka-stream" % akkaVersion     % Provided,
+      "com.typesafe.akka" %% "akka-http"   % akkaHttpVersion % Provided
     )
   )
   .dependsOn(streamJson)
@@ -74,6 +75,7 @@ lazy val tests = project
   .settings(
     libraryDependencies ++=
       List(
+        "com.typesafe.akka" %% "akka-stream"   % akkaVersion      % Test,
         "com.typesafe.akka" %% "akka-http"     % akkaHttpVersion  % Test,
         "org.scalatest"     %% "scalatest"     % scalaTestVersion % Test,
         "io.circe"          %% "circe-generic" % circeVersion     % Test
