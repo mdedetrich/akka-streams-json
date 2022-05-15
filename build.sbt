@@ -157,9 +157,9 @@ val flagsFor13 = Seq(
 
 ThisBuild / scalacOptions ++= {
   CrossVersion.partialVersion(scalaVersion.value) match {
-    case Some((2, n)) if n == 13 =>
+    case Some(2, n) if n == 13 =>
       flagsFor13
-    case Some((2, n)) if n == 12 =>
+    case Some(2, n) if n == 12 =>
       flagsFor12
   }
 }
