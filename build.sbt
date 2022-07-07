@@ -8,7 +8,7 @@ val scala212Version = "2.12.15"
 val circeVersion     = "0.14.1"
 val akkaVersion      = "2.6.19"
 val akkaHttpVersion  = "10.2.9"
-val jawnVersion      = "1.3.2"
+val jawnVersion      = "1.4.0"
 val scalaTestVersion = "3.2.11"
 
 ThisBuild / crossScalaVersions   := Seq(scala212Version, scala213Version)
