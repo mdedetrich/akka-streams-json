@@ -6,7 +6,7 @@ val scala213Version = "2.13.8"
 val scala212Version = "2.12.15"
 
 val circeVersion     = "0.14.1"
-val akkaVersion      = "2.6.19"
+val akkaVersion      = "2.6.20"
 val akkaHttpVersion  = "10.2.9"
 val jawnVersion      = "1.3.2"
 val scalaTestVersion = "3.2.11"
