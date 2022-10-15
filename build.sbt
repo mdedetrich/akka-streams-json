@@ -2,7 +2,7 @@ import com.jsuereth.sbtpgp.PgpKeys.publishSigned
 
 name := "akka-streams-json"
 
-val scala213Version = "2.13.8"
+val scala213Version = "2.13.10"
 val scala212Version = "2.12.15"
 
 val circeVersion     = "0.14.1"
