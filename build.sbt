@@ -2,8 +2,8 @@ import com.jsuereth.sbtpgp.PgpKeys.publishSigned
 
 name := "akka-streams-json"
 
-val scala213Version = "2.13.8"
-val scala212Version = "2.12.15"
+val scala213Version = "2.13.10"
+val scala212Version = "2.12.17"
 
 val circeVersion     = "0.14.1"
 val akkaVersion      = "2.6.19"
@@ -86,7 +86,7 @@ lazy val tests = project
   )
 
 ThisBuild / scalacOptions ++= Seq(
-  "-target:jvm-1.8",
+  "-release:8",
   "-encoding",
   "UTF-8",
   "-deprecation", // warning and location for usages of deprecated APIs
