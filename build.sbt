@@ -166,7 +166,7 @@ ThisBuild / scalacOptions ++= {
 
 IntegrationTest / parallelExecution := false
 
-ThisBuild / githubWorkflowTargetBranches := Seq("master") // Once we have branches per version, add the pattern here
+ThisBuild / githubWorkflowTargetBranches := Seq("main") // Once we have branches per version, add the pattern here
 
 ThisBuild / githubWorkflowBuild := Seq(
   WorkflowStep.Sbt(List("mimaReportBinaryIssues"), name = Some("Report binary compatibility issues")),
