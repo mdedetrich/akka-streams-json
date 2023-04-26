@@ -121,24 +121,6 @@ ThisBuild / publishTo              := sonatypePublishTo.value
 ThisBuild / test / publishArtifact := false
 ThisBuild / pomIncludeRepository   := (_ => false)
 
-import ReleaseTransformations._
-
-releaseCrossBuild := true
-releaseProcess := Seq[ReleaseStep](
-  checkSnapshotDependencies,
-  inquireVersions,
-  runClean,
-  runTest,
-  setReleaseVersion,
-  commitReleaseVersion,
-  tagRelease,
-  releaseStepCommandAndRemaining("+publishSigned"),
-  releaseStepCommand("sonatypeReleaseAll"),
-  setNextVersion,
-  commitNextVersion,
-  pushChanges
-)
-
 val flagsFor12 = Seq(
   "-Xlint:_",
   "-Ywarn-infer-any",
@@ -189,7 +171,25 @@ ThisBuild / githubWorkflowBuildPostamble ++= Seq(
 // https://github.com/sbt/sbt/issues/6468
 ThisBuild / githubWorkflowUseSbtThinClient := false
 
-ThisBuild / githubWorkflowPublishTargetBranches := Seq()
+ThisBuild / githubWorkflowPublish := Seq(
+  WorkflowStep.Sbt(
+    commands = List("ci-release"),
+    name = Some("Publish project"),
+    env = Map(
+      "PGP_PASSPHRASE"    -> "${{ secrets.PGP_PASSPHRASE }}",
+      "PGP_SECRET"        -> "${{ secrets.PGP_SECRET }}",
+      "SONATYPE_PASSWORD" -> "${{ secrets.SONATYPE_PASSWORD }}",
+      "SONATYPE_USERNAME" -> "${{ secrets.SONATYPE_USERNAME }}"
+    )
+  )
+)
+
+ThisBuild / githubWorkflowTargetTags ++= Seq("v*")
+ThisBuild / githubWorkflowPublishTargetBranches :=
+  Seq(
+    RefPredicate.StartsWith(Ref.Tag("v")),
+    RefPredicate.Equals(Ref.Branch("main"))
+  )
 
 ThisBuild / githubWorkflowJavaVersions := List(
   JavaSpec.temurin("8"),
