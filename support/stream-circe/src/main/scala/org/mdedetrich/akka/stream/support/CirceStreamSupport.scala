@@ -35,6 +35,9 @@ trait CirceStreamSupport {
   def decode[A: Decoder](mode: AsyncParser.Mode): Flow[ByteString, A, NotUsed] =
     JsonStreamParser.flow[Json](mode).map(decodeJson[A])
 
+  def decode[A: Decoder](mode: AsyncParser.Mode, multiValue: Boolean): Flow[ByteString, A, NotUsed] =
+    JsonStreamParser.flow[Json](mode, multiValue).map(decodeJson[A])
+
   def encode[A](implicit A: Encoder[A], P: Printer = Printer.noSpaces): Flow[A, String, NotUsed] =
     Flow[A].map(a => P.print(A(a)))
 
