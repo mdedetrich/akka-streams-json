@@ -40,13 +40,19 @@ object JsonStreamParser {
     apply[J](ValueStream)
 
   def apply[J: Facade](mode: AsyncParser.Mode): Graph[FlowShape[ByteString, J], NotUsed] =
-    new JsonStreamParser(mode)
+    new JsonStreamParser(mode, multiValue = false)
+
+  def apply[J: Facade](mode: AsyncParser.Mode, multiValue: Boolean): Graph[FlowShape[ByteString, J], NotUsed] =
+    new JsonStreamParser(mode, multiValue)
 
   def flow[J: Facade]: Flow[ByteString, J, NotUsed] =
     Flow.fromGraph(apply[J]).withAttributes(jsonStream)
 
   def flow[J: Facade](mode: AsyncParser.Mode): Flow[ByteString, J, NotUsed] =
     Flow.fromGraph(apply[J](mode)).withAttributes(jsonStream)
+
+  def flow[J: Facade](mode: AsyncParser.Mode, multiValue: Boolean): Flow[ByteString, J, NotUsed] =
+    Flow.fromGraph(apply[J](mode, multiValue)).withAttributes(jsonStream)
 
   def head[J: Facade]: Sink[ByteString, Future[J]] =
     flow.toMat(Sink.head)(Keep.right)
@@ -123,10 +129,11 @@ object JsonStreamParser {
   }
 }
 
-final class JsonStreamParser[J: Facade] private (mode: AsyncParser.Mode) extends GraphStage[FlowShape[ByteString, J]] {
+final class JsonStreamParser[J: Facade] private (mode: AsyncParser.Mode, multiValue: Boolean)
+    extends GraphStage[FlowShape[ByteString, J]] {
   private[this] val in  = Inlet[ByteString]("Json.in")
   private[this] val out = Outlet[J]("Json.out")
   override val shape    = FlowShape(in, out)
   override def createLogic(inheritedAttributes: Attributes): GraphStageLogic =
-    new JsonStreamParser.ParserLogic[J](AsyncParser[J](mode), shape)
+    new JsonStreamParser.ParserLogic[J](AsyncParser[J](mode, multiValue), shape)
 }

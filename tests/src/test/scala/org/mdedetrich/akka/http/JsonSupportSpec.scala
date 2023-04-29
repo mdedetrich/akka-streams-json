@@ -32,7 +32,7 @@ import org.mdedetrich.akka.stream.support.CirceStreamSupport
 import org.scalatest._
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AsyncWordSpec
-import org.typelevel.jawn.ParseException
+import org.typelevel.jawn.{AsyncParser, ParseException}
 
 import scala.concurrent.Await
 import scala.concurrent.duration._
@@ -177,6 +177,14 @@ class JsonSupportSpec
           _.flatten shouldBe Seq(foo, foo, foo)
         }
       }
+
+      "produce all values with AsyncParser.UnwrapArray" in {
+        val parsed = entity.dataBytes.via(decode[Foo](AsyncParser.UnwrapArray)).runWith(Sink.seq)
+
+        parsed.map {
+          _ shouldBe Seq(foo, foo, foo)
+        }
+      }
     }
 
     "Multiple, lazily streamed json entities via a flow in an JSON array and null element" should {
@@ -186,6 +194,14 @@ class JsonSupportSpec
 
         parsed.map {
           _.flatten shouldBe List(Some(foo), Some(foo), Some(foo), None)
+        }
+      }
+
+      "produce all values with AsyncParser.UnwrapArray" in {
+        val parsed = entity.dataBytes.via(decode[Option[Foo]](AsyncParser.UnwrapArray)).runWith(Sink.seq)
+
+        parsed.map {
+          _ shouldBe List(Some(foo), Some(foo), Some(foo), None)
         }
       }
     }
@@ -198,6 +214,28 @@ class JsonSupportSpec
 
         parsed.map {
           _.flatten shouldBe Seq(foo, foo, foo)
+        }
+      }
+    }
+
+    "Multiple, lazily streamed json arrays" should {
+      val entity = mkEntity(s"[$goodJson,$goodJson][$goodJson,$goodJson]")
+
+      "produce all values with AsyncParser.UnwrapArray and multiValue = true" in {
+        val parsed = entity.dataBytes.via(decode[Foo](AsyncParser.UnwrapArray, multiValue = true)).runWith(Sink.seq)
+
+        parsed.map {
+          _ shouldBe Seq(foo, foo, foo, foo)
+        }
+      }
+
+      "produce a parse exception with AsyncParser.UnwrapArray and multiValue = false" in {
+        val futureException = recoverToExceptionIf[ParseException](
+          entity.dataBytes.via(decode[Foo](AsyncParser.UnwrapArray, multiValue = false)).runWith(Sink.seq)
+        )
+
+        futureException.map {
+          _.getMessage shouldBe "expected eof got '[{\"...' (line 1, column 86)"
         }
       }
     }
