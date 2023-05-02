@@ -128,13 +128,13 @@ val flagsFor12 = Seq(
   "-Ywarn-inaccessible",
   "-Ywarn-infer-any",
   "-opt-inline-from:<sources>",
-  "-opt:l:method"
+  "-opt:l:inline"
 )
 
 val flagsFor13 = Seq(
   "-Xlint:_",
   "-opt-inline-from:<sources>",
-  "-opt:l:method"
+  "-opt:l:inline"
 )
 
 ThisBuild / scalacOptions ++= {
