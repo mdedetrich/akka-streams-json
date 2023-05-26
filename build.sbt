@@ -134,7 +134,7 @@ val flagsFor12 = Seq(
 val flagsFor13 = Seq(
   "-Xlint:_",
   "-opt-inline-from:<sources>",
-  "-opt:l:method"
+  "-opt:l:inline"
 )
 
 ThisBuild / scalacOptions ++= {
