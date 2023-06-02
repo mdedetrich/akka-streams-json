@@ -6,6 +6,10 @@
 
 # Akka Streams Json Support
 
+:warning: This project is no longer being maintained due to Akka's move away from [Open Source](https://www.lightbend.com/blog/why-we-are-changing-the-license-for-akka).
+There is version of this library [pekko-streams-circe](https://github.com/mdedetrich/pekko-streams-circe) that uses [Pekko](https://pekko.apache.org/),
+the open source fork of Akka.
+
 This library provides Json support for stream based applications using [jawn](https://github.com/non/jawn)
 as a parser. It supports all backends that jawn supports with support for [circe](https://github.com/travisbrown/circe) provided as a example.
 
