@@ -9,7 +9,7 @@ val circeVersion     = "0.14.5"
 val akkaVersion      = "2.6.20"
 val akkaHttpVersion  = "10.2.10"
 val jawnVersion      = "1.5.0"
-val scalaTestVersion = "3.2.16"
+val scalaTestVersion = "3.2.17"
 
 ThisBuild / crossScalaVersions   := Seq(scala212Version, scala213Version)
 ThisBuild / scalaVersion         := (ThisBuild / crossScalaVersions).value.last
